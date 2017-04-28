@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue demo</title>
+    <script src="js/vue.js"></script>
+    <style>
+        .red{
+            color: red;
+        }
+        .item-done span{
+            color: #999;
+        }
+        .show-done li, .show-active li.item-done{
+            display: none;
+        }
+        .show-done li.item-done, .show-active li{
+            display: list-item;;
+        }
+    </style>
+</head>
+<body>
+    <div id="todoApp">
+        <h1>TODO MVC</h1>
+        <div class="todo-add">
+            <input id="addInput" type="text" v-model="newMessage" placeholder="输入TODO事项" />
+            <a href="#" class="button" @click.prevent="addTodo">Add</a>
+        </div>
+        <ul :class="[showStatus]">
+            <li v-for="item in todoList" :class="{'item-done':item.isDone}">
+                <span v-if="!item.editStatus">
+                    <input type="checkbox" v-model="item.isDone" />
+                    <span @dblclick="showEdit(item)">{{ item.text }}</span>
+                    <a href="#" @click.prevent="delTodo(item)">X</a>
+                </span>
+                <input v-fuck-chaoge1="currentEdit == item" type="text" v-if="item.editStatus" v-model="item.text" @keyup.enter="hideEdit(item)" />
+            </li>
+        </ul>
+        <div class="footer">
+            <span class="item-left">
+                剩余{{ itemLeft }}项
+            </span>
+            <a href="#" class="button" :class="{active: showStatus == 'show-all'}" @click.prevent="showStatus='show-all'">全部</a>
+            <a href="#" class="button" :class="{active: showStatus == 'show-done'}" @click.prevent="showStatus='show-done'">已完成</a>
+            <a href="#" class="button" :class="{active: showStatus == 'show-active'}" @click.prevent="showStatus='show-active'">未完成</a>
+        </div>
+    </div>
+    <script>
+        var app1 = new Vue({
+            el: '#todoApp',
+            data: {
+                newMessage: '',
+                currentEdit: null,
+                showStatus: 'show-all',
+                todoList: [
+                    {
+                        text: '写完100行代码',
+                        editStatus: false,
+                        isDone: false
+                    }
+                ]
+            },
+            computed: {
+                itemLeft: function(){
+                    return this.todoList.filter(function(todo){
+                        return !todo.isDone;
+                    }).length;
+                }
+            },
+            methods: {
+                addTodo: function(){
+                    if(!this.newMessage){
+                        return;
+                    }
+                    this.todoList.push({
+                        text: this.newMessage,
+                        editStatus: false,
+                        isDone: false
+                    })
+                },
+                delTodo: function(todo){
+                    var todoList = this.todoList;
+                    todoList.splice(todoList.indexOf(todo), 1);
+                },
+                showEdit: function(todo){
+                    todo.editStatus = true;
+                    this.currentEdit = todo;
+                },
+                hideEdit: function(todo){
+                    todo.editStatus = false;
+                }
+            },
+            directives: {
+                'fuck-chaoge1': {
+                    bind: function(){
+                        console.log('bind', arguments);
+                    },
+                    inserted: function(){
+                        if(arguments[1].value === true){
+                            arguments[0].focus();
+                        }
+                        console.log('inserted', arguments);
+                    },
+                    update: function(){
+                        console.log('update', arguments);
+                    },
+                    componentUpdated: function(){
+                        console.log('componentUpdated', arguments);
+                    },
+                    unbind: function(){
+                        console.log('unbind', arguments);
+                    }
+                },
+                'fuck-chaoge': function(el, binding){
+                    if(binding.value === true){
+                        console.log(el,binding)
+                        el.focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
