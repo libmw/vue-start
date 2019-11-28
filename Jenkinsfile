@@ -18,9 +18,9 @@ pipeline {
         }
         stage('Deliver') { 
             steps {
-                sh './build.sh' 
+                sh 'sh ./build.sh' 
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-                sh './kill.sh' 
+                sh 'sh ./kill.sh' 
             }
         }
     }
