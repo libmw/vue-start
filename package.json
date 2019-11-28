@@ -1,0 +1,25 @@
+{
+  "name": "vue-start",
+  "version": "1.0.0",
+  "description": "my first vue project",
+  "main": "index.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libmw/vue-start.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/libmw/vue-start/issues"
+  },
+  "homepage": "https://github.com/libmw/vue-start#readme",
+  "devDependencies": {}
+}
